@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { OilChangeForm } from "./components/oilchangeform";
 import { OilChangeCard, OilChange } from "./components/oilchangecard";
 import { getFromLocalStorage, saveToLocalStorage, calculateNextOilChange, formatDate } from "./lib/utils";
