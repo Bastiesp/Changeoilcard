@@ -16,7 +16,7 @@ export default function App() {
     saveToLocalStorage("oilChanges", oilChanges);
   }, [oilChanges]);
 
-  const handleAdd = (data: { cliente: string; vehiculo: string; placa: string; kilometraje: number }) => {
+  const handleAdd = (data: { cliente: string; vehiculo: string; placa: string; kilometraje: number; aceiteUsado: string }) => {
     const newChange: OilChange = {
       ...data,
       id: crypto.randomUUID(),
@@ -40,21 +40,35 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-md mx-auto space-y-6">
-        <OilChangeForm onSubmit={handleAdd} />
-        {oilChanges.length === 0 ? (
-          <p className="text-center text-gray-500 mt-6">No hay registros aún.</p>
-        ) : (
-          oilChanges.map(c => (
-            <OilChangeCard
-              key={c.id}
-              data={c}
-              onDelete={handleDelete}
-              onToggle={handleToggle}
-            />
-          ))
-        )}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="max-w-3xl mx-auto px-6 py-10">
+        <div className="mb-10">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Bgarage</h1>
+          <p className="text-lg text-gray-600">Tarjeta de Cambio de Aceite</p>
+          <div className="h-1 w-20 bg-blue-600 mt-3"></div>
+        </div>
+
+        <div className="space-y-6">
+          <OilChangeForm onSubmit={handleAdd} />
+
+          {oilChanges.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
+              <p className="text-gray-500 text-lg">No hay registros de cambio de aceite aún.</p>
+              <p className="text-gray-400 mt-2">Agrega tu primer registro usando el formulario arriba.</p>
+            </div>
+          ) : (
+            <div className="grid gap-6">
+              {oilChanges.map(c => (
+                <OilChangeCard
+                  key={c.id}
+                  data={c}
+                  onDelete={handleDelete}
+                  onToggle={handleToggle}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

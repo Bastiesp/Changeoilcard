@@ -4,7 +4,8 @@ export interface OilChange {
   vehiculo: string;
   placa: string;
   kilometraje: number;
+  aceiteUsado: string;
   fecha: string;
   proximoCambio: number;
-  completado: boolean; // Nuevo campo para marcar como realizado
+  completado: boolean;
 }
