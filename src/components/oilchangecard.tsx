@@ -8,8 +8,6 @@ interface OilChangeCardProps {
 }
 
 export const OilChangeCard: React.FC<OilChangeCardProps> = ({ data, onDelete }) => {
-  // ... resto del código igual
-};
   return (
     <Card className="w-full">
       <div className="flex justify-between items-start">
