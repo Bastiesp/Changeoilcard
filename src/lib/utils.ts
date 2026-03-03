@@ -1,7 +1,7 @@
-import { OilChange } from "../types";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
+// Guardar y recuperar localStorage genérico
 export const saveToLocalStorage = <T>(key: string, data: T) => {
   localStorage.setItem(key, JSON.stringify(data));
 };
@@ -11,16 +11,16 @@ export const getFromLocalStorage = <T>(key: string): T | null => {
   return data ? JSON.parse(data) : null;
 };
 
-// Calcula el próximo cambio sumando 5000 km
+// Calcular próximo cambio (ej: +5000 km)
 export const calculateNextOilChange = (km: number) => km + 5000;
 
-// Formatea fecha actual DD/MM/YYYY
+// Fecha formateada DD/MM/YYYY
 export const formatDate = () => {
   const d = new Date();
   return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
 };
 
-// Genera PDF de una tarjeta
+// Generar PDF de tarjeta
 export const generatePDF = async (id: string) => {
   const card = document.getElementById(`oilcard-${id}`);
   if (!card) return;
