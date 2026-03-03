@@ -47,7 +47,17 @@ export const OilChangeCard: React.FC<OilChangeCardProps> = ({ data, onDelete, on
             Eliminar
           </Button>
         )}
-        <Button variant="primary" className="flex-1" onClick={() => generatePDF(data.id)}>
+        <Button
+          variant="primary"
+          className="flex-1"
+          onClick={async () => {
+            try {
+              await generatePDF(`oilcard-${data.id}`, `CambioAceite_${data.cliente}.pdf`);
+            } catch (err) {
+              console.error("Error al generar PDF:", err);
+            }
+          }}
+        >
           Descargar PDF
         </Button>
       </div>
