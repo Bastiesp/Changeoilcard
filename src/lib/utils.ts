@@ -37,16 +37,29 @@ export async function generatePDF(elementId: string, fileName: string) {
   const element = document.getElementById(elementId);
   if (!element) throw new Error(`No se encontró el elemento con id "${elementId}"`);
 
-  const canvas = await html2canvas(element, {
-    backgroundColor: '#ffffff',
-    scale: 2,
-  });
-  const imgData = canvas.toDataURL('image/png');
-  const pdf = new jsPDF('p', 'mm', [100, 160]);
+  const originalStyle = element.getAttribute('style');
+  element.setAttribute('style', 'position: fixed; left: -9999px; top: -9999px; width: 100mm; height: 160mm; visibility: visible;');
 
-  const pdfWidth = pdf.internal.pageSize.getWidth();
-  const pdfHeight = pdf.internal.pageSize.getHeight();
+  try {
+    const canvas = await html2canvas(element, {
+      backgroundColor: '#ffffff',
+      scale: 2,
+      useCORS: true,
+      logging: false,
+    });
 
-  pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-  pdf.save(fileName);
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', [100, 160]);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save(fileName);
+  } finally {
+    if (originalStyle) {
+      element.setAttribute('style', originalStyle);
+    } else {
+      element.removeAttribute('style');
+    }
+  }
 }
